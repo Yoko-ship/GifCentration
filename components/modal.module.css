@@ -1,0 +1,69 @@
+.dialog{
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background-color: #1D3557;
+    margin: 0;
+    border: none;
+}
+.menu{
+    display: flex;
+    justify-content: flex-end;
+}
+.menu button{
+    background: none;
+    border: none;
+    font-size: 3rem;
+    color: white;
+    margin: 2rem;
+    cursor: pointer;
+}
+.content{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+.content h1,.content h2{
+    color: white;
+    margin: 1rem 0;
+    font-size: 2rem;
+}
+.content input{
+    padding: 1rem;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    font-family: inherit;
+}
+.btns{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.btns button{
+    padding: 0.5rem;
+    margin: 0 0.5rem;
+    background-color: #E63946;
+    color: white;
+    border: 1px solid black;
+    border-radius: 10px;
+    font-family: 1.2rem;
+    width: 5%;
+    cursor: pointer;
+}
+
+.confirm{
+    margin: 3rem 0;
+    padding: 1rem;
+    background: green;
+    border: none;
+    background-color: #E63946;
+    color: white;
+    border: 1px solid black;
+    border-radius: 10px;
+    width: 15%;
+    cursor: pointer;
+    font-size: 2rem;
+}

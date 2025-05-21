@@ -1,0 +1,26 @@
+.main{
+    margin: 2rem 0;
+
+}
+.grids{
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+    gap: 1rem;
+}
+.grid{
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 1rem;
+    background-color: #457B9D;
+    cursor: pointer;
+    min-height: 300px;
+
+}
+.gif{
+    width: 100%;
+    border-radius: 10px;
+    height: 50%;
+}
+.questionMark{
+    margin-left: 5rem;
+}
