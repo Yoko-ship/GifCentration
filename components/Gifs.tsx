@@ -1,43 +1,71 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useAppSelect } from "@/story/hooks";
 import classes from "./gifs.module.css";
 import Image from "next/image";
+
+type Selected = {
+  id: string;
+  title: string;
+};
+
 const Gifs = () => {
   const data = useAppSelect((state) => state.gifReducer.item)[0];
   const [activeId, setActiveId] = useState<string[]>([]);
-  const [cloneData,setCloneData] = useState([])
-  const openHanlder = (id: string) => {
-    setActiveId((prevArray) =>{
-      if(prevArray.includes(id)) return prevArray
-
-      const updated = [...prevArray,id]
-      return updated.length > 2 ? updated.slice(1):updated
-    })
-  };
+  const [cloneData, setCloneData] = useState([]);
+  const [selected, setSelected] = useState<Selected[]>([]);
+  const [matchedId,setMatchedId] = useState<string[]>([])
   
-  useEffect(() =>{
-    if(data){
-      const fullData = Array.from({length:10},(_,i) =>{
-        const original = data[i % data.length];
-        return{
-          ...original,
-          id:`${original.id}-${i}`
-        }
-      }) 
-      const shuffled = [...fullData].sort(() => Math.random() - 0.5)
-      setCloneData(shuffled)
-    }
-  },[data])
+  const openHanlder = useCallback((id:string,title:string) =>{
+    if(activeId.includes(id) || matchedId.includes(id)) return;
+    setSelected((prev) => [...prev,{id,title}]) 
+    setActiveId((prev) => [...prev,id])   
+  },[activeId,matchedId]) 
 
-  console.log(cloneData)
+  useEffect(() => {
+    if (selected.length === 2) {
+      const [first,second] = selected
+      if (first.title === second.title){
+        console.log("match");
+        setMatchedId((prev) => [...prev,first.id,second.id])
+        setSelected([])
+        setActiveId([])
+      } else {
+        console.log("Not a match");
+        const timeOut = setTimeout(() => {
+          setSelected([])
+          setActiveId([])
+        }, 500);
+        return () => clearTimeout(timeOut);
+      }
+    }
+  }, [selected]);
+
+  useEffect(() => {
+    if (data) {
+      const fullData = Array.from({ length: 10 }, (_, i) => {
+        const original = data[i % data.length];
+        return {
+          ...original,
+          id: `${original.id}-${i}`,
+        };
+      });
+      const shuffled = [...fullData].sort(() => Math.random() - 0.5);
+      setCloneData(shuffled);
+    }
+  }, [data]);
+
   return (
     <>
       <main className={classes.main}>
         <div className={classes.grids}>
           {cloneData?.map((item) => (
-            <div className={classes.grid} onClick={() => openHanlder(item.id)}>
-              {activeId.includes(item.id) ? (
+            <div
+              className={classes.grid}
+              onClick={() => openHanlder(item.id, item.title)}
+              key={item.id}
+            >
+              {activeId.includes(item.id) || matchedId.includes(item.id) ? (
                 <img src={item.images.original.url} alt="gif" />
               ) : (
                 <Image

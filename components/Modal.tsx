@@ -1,5 +1,5 @@
 "use client";
-import React, { Dispatch, useEffect, useState } from "react";
+import React, {useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import classes from "./modal.module.css";
 import { useActionState } from "react";
@@ -44,11 +44,7 @@ const Modal = () => {
               placeholder="Enter your query here..."
               name="search"
             />
-            <h2>Popular Searches</h2>
-            <div className={classes.btns}>
-              <button>test</button>
-              <button>test</button>
-            </div>
+
             <button className={classes.confirm}>Go!</button>
           </section>
         </form>
